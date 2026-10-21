@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مشروعي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f7fb;
+      --surface: #ffffff;
+      --text: #1b1b2f;
+      --muted: #6b6b80;
+      --border: #e6e6ef;
+      --primary: #5b4bdb;
+      --primary-soft: #ecebfd;
+      --accent: #12b5a5;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(27, 27, 47, .08);
+    }
+    :root[data-theme="dark"] {
+      --bg: #0f0f1a;
+      --surface: #181828;
+      --text: #f1f1f7;
+      --muted: #a3a3b8;
+      --border: #2a2a40;
+      --primary: #8b7dff;
+      --primary-soft: #26234a;
+      --accent: #2dd4bf;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Tajawal", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      transition: background .3s, color .3s;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+    /* الشريط العلوي */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { font-weight: 800; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+    .logo span {
+      width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff;
+    }
+    .links { display: flex; gap: 28px; list-style: none; }
+    .links a { color: var(--muted); font-weight: 500; transition: color .2s; }
+    .links a:hover { color: var(--primary); }
+    .actions { display: flex; gap: 10px; align-items: center; }
+    .icon-btn {
+      width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text); cursor: pointer; font-size: 1.1rem;
+    }
+    .menu-btn { display: none; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 24px; border-radius: 12px; border: none; cursor: pointer;
+      font: inherit; font-weight: 700; transition: transform .15s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 35%, transparent); }
+    .btn-ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+
+    /* القسم الرئيسي */
+    .hero { padding: 90px 0 70px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; }
+    .badge {
+      display: inline-block; padding: 6px 14px; border-radius: 999px;
+      background: var(--primary-soft); color: var(--primary); font-weight: 700; font-size: .9rem; margin-bottom: 18px;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.3; font-weight: 800; margin-bottom: 18px; }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero p { color: var(--muted); font-size: 1.15rem; margin-bottom: 30px; max-width: 520px; }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .mockup {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
+      box-shadow: var(--shadow); padding: 22px;
+    }
+    .mockup-top { display: flex; gap: 6px; margin-bottom: 18px; }
+    .mockup-top i { width: 11px; height: 11px; border-radius: 50%; background: var(--border); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+    .stat { background: var(--bg); border-radius: 14px; padding: 14px; }
+    .stat b { display: block; font-size: 1.3rem; }
+    .stat small { color: var(--muted); }
+    .bars { display: flex; align-items: flex-end; gap: 10px; height: 140px; padding: 10px; background: var(--bg); border-radius: 14px; }
+    .bars div {
+      flex: 1; border-radius: 8px 8px 4px 4px;
+      background: linear-gradient(to top, var(--primary), var(--accent));
+      animation: grow 1s ease both;
+    }
+    @keyframes grow { from { height: 0; } }
+
+    /* الأقسام */
+    section { padding: 70px 0; }
+    .section-head { text-align: center; max-width: 600px; margin: 0 auto 44px; }
+    .section-head h2 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
+    .section-head p { color: var(--muted); }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 28px; transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .card .ic {
+      width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center;
+      background: var(--primary-soft); font-size: 1.5rem; margin-bottom: 16px;
+    }
+    .card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .card p { color: var(--muted); }
+
+    /* الأسعار */
+    .price { text-align: center; }
+    .price .amount { font-size: 2.4rem; font-weight: 800; margin: 10px 0; }
+    .price .amount small { font-size: 1rem; color: var(--muted); font-weight: 500; }
+    .price ul { list-style: none; margin: 18px 0 24px; color: var(--muted); }
+    .price li { padding: 6px 0; }
+    .price li::before { content: "✓ "; color: var(--accent); font-weight: 800; }
+    .price.featured { border: 2px solid var(--primary); position: relative; }
+    .price.featured::after {
+      content: "الأكثر طلباً"; position: absolute; top: -14px; right: 50%; transform: translateX(50%);
+      background: var(--primary); color: #fff; padding: 2px 14px; border-radius: 999px; font-size: .85rem;
+    }
+    .price .btn { width: 100%; }
+
+    /* نموذج التواصل */
+    .contact { max-width: 620px; margin-inline: auto; }
+    form { display: grid; gap: 14px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    label { font-weight: 700; font-size: .95rem; display: block; margin-bottom: 6px; }
+    input, textarea {
+      width: 100%; padding: 13px 15px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--text); font: inherit; transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, textarea:focus {
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+    }
+    .error { color: #e5484d; font-size: .85rem; min-height: 1.2em; }
+
+    footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); text-align: center; }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 120px);
+      background: var(--text); color: var(--bg); padding: 14px 22px; border-radius: 12px;
+      font-weight: 700; transition: transform .35s; z-index: 20;
+    }
+    .toast.show { transform: translate(-50%, 0); }
+
+    /* الجوال */
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding-top: 50px; }
+      .grid { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+      .menu-btn { display: inline-block; }
+      .actions .btn { display: none; }
+      .links {
+        position: absolute; top: 68px; right: 0; left: 0; flex-direction: column; gap: 0;
+        background: var(--surface); border-bottom: 1px solid var(--border);
+        max-height: 0; overflow: hidden; transition: max-height .3s;
+      }
+      .links.open { max-height: 300px; }
+      .links a { display: block; padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container nav">
+      <a href="#" class="logo"><span>م</span> مشروعي</a>
+      <ul class="links" id="links">
+        <li><a href="#features">المميزات</a></li>
+        <li><a href="#pricing">الأسعار</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+      </ul>
+      <div class="actions">
+        <button class="icon-btn" id="themeBtn" aria-label="تبديل الوضع الليلي">🌙</button>
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+        <a href="#contact" class="btn btn-primary">ابدأ الآن</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container hero">
+      <div>
+        <span class="badge">✨ إصدار جديد</span>
+        <h1>أدِر أعمالك بذكاء مع <em>منصة واحدة</em></h1>
+        <p>واجهة بسيطة وسريعة تساعدك على تنظيم مهامك، ومتابعة إحصائياتك، والتواصل مع فريقك من أي مكان.</p>
+        <div class="hero-cta">
+          <a href="#pricing" class="btn btn-primary">جرّب مجاناً</a>
+          <a href="#features" class="btn btn-ghost">اكتشف المزيد</a>
+        </div>
+      </div>
+      <div class="mockup" aria-hidden="true">
+        <div class="mockup-top"><i></i><i></i><i></i></div>
+        <div class="stats">
+          <div class="stat"><b data-count="1240">0</b><small>مستخدم</small></div>
+          <div class="stat"><b data-count="98">0</b><small>% رضا</small></div>
+          <div class="stat"><b data-count="356">0</b><small>مشروع</small></div>
+        </div>
+        <div class="bars">
+          <div style="height:40%"></div><div style="height:65%"></div><div style="height:50%"></div>
+          <div style="height:80%"></div><div style="height:60%"></div><div style="height:95%"></div>
+          <div style="height:75%"></div>
+        </div>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>لماذا تختارنا؟</h2>
+          <p>كل ما تحتاجه في مكان واحد، مصمم ليكون سهلاً وواضحاً.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><div class="ic">⚡</div><h3>سرعة عالية</h3><p>أداء سريع وتحميل فوري لجميع الصفحات على أي جهاز.</p></article>
+          <article class="card"><div class="ic">🔒</div><h3>أمان تام</h3><p>بياناتك محمية بأحدث معايير التشفير والحماية.</p></article>
+          <article class="card"><div class="ic">📱</div><h3>متوافق مع الجوال</h3><p>تصميم متجاوب يعمل بشكل مثالي على الهاتف والحاسوب.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <h2>خطط الأسعار</h2>
+          <p>اختر الخطة المناسبة لك، ويمكنك الترقية في أي وقت.</p>
+        </div>
+        <div class="grid">
+          <div class="card price">
+            <h3>الأساسية</h3>
+            <div class="amount">مجاناً</div>
+            <ul><li>مشروع واحد</li><li>مستخدم واحد</li><li>دعم عبر البريد</li></ul>
+            <a href="#contact" class="btn btn-ghost">ابدأ</a>
+          </div>
+          <div class="card price featured">
+            <h3>الاحترافية</h3>
+            <div class="amount">49 <small>ر.س / شهرياً</small></div>
+            <ul><li>مشاريع غير محدودة</li><li>حتى 10 مستخدمين</li><li>دعم على مدار الساعة</li></ul>
+            <a href="#contact" class="btn btn-primary">اشترك الآن</a>
+          </div>
+          <div class="card price">
+            <h3>الشركات</h3>
+            <div class="amount">99 <small>ر.س / شهرياً</small></div>
+            <ul><li>كل مزايا الاحترافية</li><li>مستخدمون غير محدودين</li><li>مدير حساب خاص</li></ul>
+            <a href="#contact" class="btn btn-ghost">تواصل معنا</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>تواصل معنا</h2>
+          <p>أرسل لنا رسالتك وسنرد عليك في أقرب وقت.</p>
+        </div>
+        <div class="card contact">
+          <form id="contactForm" novalidate>
+            <div class="row">
+              <div><label for="name">الاسم</label><input id="name" placeholder="اكتب اسمك"><div class="error"></div></div>
+              <div><label for="email">البريد الإلكتروني</label><input id="email" type="email" placeholder="example@mail.com" dir="ltr"><div class="error"></div></div>
+            </div>
+            <div><label for="msg">الرسالة</label><textarea id="msg" rows="5" placeholder="اكتب رسالتك هنا..."></textarea><div class="error"></div></div>
+            <button class="btn btn-primary" type="submit">إرسال الرسالة</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> مشروعي — جميع الحقوق محفوظة</div>
+  </footer>
+
+  <div class="toast" id="toast">تم إرسال رسالتك بنجاح ✅</div>
+
+  <script>
+    const root = document.documentElement;
+
+    // الوضع الليلي (يُحفظ في المتصفح)
+    const themeBtn = document.getElementById('themeBtn');
+    const setTheme = (t) => {
+      root.dataset.theme = t;
+      themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+      try { localStorage.setItem('theme', t); } catch (e) {}
+    };
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    setTheme(saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    themeBtn.onclick = () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+
+    // قائمة الجوال
+    const links = document.getElementById('links');
+    document.getElementById('menuBtn').onclick = () => links.classList.toggle('open');
+    links.querySelectorAll('a').forEach(a => a.onclick = () => links.classList.remove('open'));
+
+    // عدّاد الأرقام
+    document.querySelectorAll('[data-count]').forEach(el => {
+      const target = +el.dataset.count;
+      let n = 0;
+      const step = Math.ceil(target / 60);
+      const tick = () => {
+        n = Math.min(n + step, target);
+        el.textContent = n.toLocaleString('ar-EG');
+        if (n < target) requestAnimationFrame(tick);
+      };
+      tick();
+    });
+
+    // التحقق من النموذج
+    const form = document.getElementById('contactForm');
+    const toast = document.getElementById('toast');
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const fields = {
+        name: v => v.trim().length >= 2 || 'الرجاء كتابة الاسم',
+        email: v => /^\S+@\S+\.\S+$/.test(v) || 'البريد الإلكتروني غير صحيح',
+        msg: v => v.trim().length >= 10 || 'الرسالة قصيرة جداً (10 أحرف على الأقل)'
+      };
+      let ok = true;
+      for (const [id, check] of Object.entries(fields)) {
+        const input = document.getElementById(id);
+        const res = check(input.value);
+        input.parentElement.querySelector('.error').textContent = res === true ? '' : res;
+        if (res !== true) ok = false;
+      }
+      if (ok) {
+        form.reset();
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      }
+    };
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
